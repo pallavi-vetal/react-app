@@ -1,0 +1,42 @@
+CREATE TABLE CONFIG (
+	id int NOT NULL AUTO_INCREMENT,
+	email VARCHAR(40) NOT NULL,
+	projectName VARCHAR(100) NOT NULL,
+	reporter VARCHAR(40) NOT NULL,
+	assignee VARCHAR(40) NOT NULL,
+	sprint VARCHAR(40) NOT NULL,
+	label VARCHAR(40) NOT NULL,
+	cycle int NOT NULL,
+	keyID VARCHAR(40) NOT NULL,
+	PRIMARY KEY ( id ),
+    FOREIGN KEY (email) REFERENCES users(email)
+); 
+
+create table course (
+        course_id varchar(7),
+        title varchar(50),
+        dept_name varchar(20),
+        credits numeric(2 , 0 ),
+        primary key (course_id),
+	cycle int NOT NULL,
+        FOREIGN KEY (dept_name)
+            REFERENCES department (dept_name)
+    );
+
+
+create table users(
+  
+   first_name VARCHAR(100) NOT NULL,
+   last_name VARCHAR(40) NOT NULL,
+   email VARCHAR(40) NOT NULL,
+   password VARCHAR(40) NOT NULL,
+   created DATE,
+   modified DATE,
+   PRIMARY KEY ( email )
+);
+
+ALTER TABLE users
+ADD PRIMARY KEY (email); 
+
+ALTER TABLE users
+DROP PRIMARY KEY; 

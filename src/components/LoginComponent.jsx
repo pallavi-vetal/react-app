@@ -2,8 +2,9 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import React, { Component } from "react";
-import UploadScreen from './UploadScreen';
-import axios from 'axios';
+import UploadScreen from "./UploadScreen";
+import axios from "axios";
+import Home from "../Home";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -25,15 +26,40 @@ class Login extends Component {
       .then(function(response) {
         console.log(response);
         if (response.data.code === 200) {
+          console.log(response.data.success);
+          var flag = false;
+          if (response.data.success === "login sucessfull and have config") {
+            
+            var home = [];
+            home.push(
+              <Home
+                appContext={self.props.appContext}
+                email={self.state.username}
+                flag = 'true'
+              />
+            );
+            self.props.appContext.setState({
+              loginPage: [],
+              uploadScreen: home
+            });
+          }
+          else{
+            var uploadScreen = [];
+            uploadScreen.push(
+              <UploadScreen
+                appContext={self.props.appContext}
+                email={self.state.username}
+              />
+            );
+            self.props.appContext.setState({
+              loginPage: [],
+              uploadScreen: uploadScreen
+            });
+
+            
+          }
+          
           console.log("Login successfull");
-          var uploadScreen = [];
-          uploadScreen.push(
-            <UploadScreen appContext={self.props.appContext} email = {self.state.username} />
-          );
-          self.props.appContext.setState({
-            loginPage: [],
-            uploadScreen: uploadScreen
-          });
         } else if (response.data.code === 204) {
           console.log("Username password do not match");
           alert("username password do not match");
@@ -50,7 +76,6 @@ class Login extends Component {
     return (
       <div>
         <MuiThemeProvider>
-        
           <div>
             <TextField
               hintText="Enter your Username"

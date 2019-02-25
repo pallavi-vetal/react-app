@@ -72,10 +72,33 @@ exports.login = function(req,res){
               console.log("Error ocurred in writing json during login at login handler in login routes",err);
             }
           })
-          res.send({
-            "code":200,
-            "success":"login sucessfull"
+          connection.query('SELECT * FROM CONFIG WHERE email = ?',[userid], function (error, res1, fields) {
+            if (error) {
+              console.log("error ocurred",error);
+              res.send({
+                "code":400,
+                "failed":"error ocurred"
+              })
+            }
+            else{
+              console.log(res1)
+              if(res1.length>0){
+                res.send({
+                  "code":200,
+                  "success":"login sucessfull and have config"
+                })
+              }
+              else{
+                res.send({
+                  "code":200,
+                  "success":"login sucessfull"
+                })
+              }
+              
+              
+            }
           })
+          
         }
         else{
           res.send({

@@ -22,37 +22,20 @@ exports.uploadConfig = function(req,res){
   // bcrypt.hash(req.body.password, 5, function( err, bcryptedPassword) {
    //save to db
    email = req.body.email;
-   var result = [];
-var  getInformationFromDB = function(callback) {
-
-connection.query('SELECT userid FROM users where email=?',email, function(err, res, fields)
-{
-    if (err)  return callback(err);
-     if(res.length){
-        result = res[0].userid;
-     }
-   callback(null, result);
-});
-};
-
-
- console.log("Call Function");
-result = getInformationFromDB(function (err, result) {
-  if (err) console.log("Database error!");
-  else return result;
-});
-   
-   console.log(result);
-   var users={
-    "userid":global.userid,
+   var someVar = [];
+   var users=[{
+    "email":req.body.email,
      "projectName":req.body.projectName,
      "reporter": req.body.reporter,
      "assignee": req.body.assignee,
      "sprint": req.body.sprint,
      "label": req.body.label,
      "cycle": req.body.cycle,
-     "keyID": req.body.key,
-   }
+     "keyID": req.body.keyID,
+   }]
+   
+
+   
    connection.query('INSERT INTO CONFIG SET ?',users, function (error, results, fields) {
    if (error) {
      console.log("error ocurred",error);
